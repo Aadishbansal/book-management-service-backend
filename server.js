@@ -1,13 +1,16 @@
 const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const path = require("path");
+
 const app = require("./app");
 
-const PORT = 8080;
+// dotenv.config({ path: path.join(__dirname, "config", ".env") });
+
+const port = process.env.PORT;
 
 mongoose
-  .connect(
-    "mongodb+srv://aadish:lUP2RfMufQPyLgtX@cluster0.77ot1dz.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp/book-management-service"
-  )
+  .connect(process.env.MONGO_URL)
   .then((client) => {
-    app.listen(PORT, () => console.log("server running"));
+    app.listen(port, () => console.log("server running : " + port));
   })
   .catch((err) => console.log(err));
